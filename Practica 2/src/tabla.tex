@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{siunitx} 
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath} 
+
+\setlength\parindent{0pt}
+
+\renewcommand{\labelenumi}{\alph{enumi}.}
+
+%\usepackage{times} 
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Práctica 2 \\ Programación Concurrente y de Tiempo Real \\Universidad de Cádiz} % Title
+
+\author{Alejandro Serrano Fernández} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Ejercicio 1}
+Para la realización del Ejercicio 1 he hecho uso de 4 hilos, que dependiendo de su identificador, serán pares o impares, luego tendremos 2 hilos con identificador par, y otros 2 con identificador impar. En el caso de que sea par, se incrementará en uno la variable n tantas veces como iteraciones haya. En caso contrario, se decrementará.
+ \\
+\begin{center}
+ \begin{tabular}{|c| c|}
+ 	Iteraciones & Resultado \\
+ 	10000 & 1071	\\
+ 	10000 & 875	\\
+ 	20000 & -3048 	\\
+ 	20000 & 6284 	\\
+ 	1000 & 0	\\
+ 	1000 & 0 \\
+ 	1000 & 0 \\
+ 	500 & 0 \\
+ 	500 & 0 
+ \end{tabular}
+ 
+\end{center}
+\hfill \break
+Como podemos observar, para iteraciones de menor tamaño, devuelve el valor esperado, aunque para iteraciones de mayor tamaño podemos comprobar que los resultados son distintos de 0. 
+
+%----------------------------------------------------------------------------------------
+%	SECTION 2
+%----------------------------------------------------------------------------------------
+
+\section{Ejercicio 2}
+Para este ejercicio emplearé la misma condición de concurso y el mismo número de hilos (2 para incrementar y 2 para decrementar).
+\begin{center}
+ \begin{tabular}{|c| c|}
+ 	Iteraciones & Resultado \\
+ 	10000 & 1104	\\
+ 	10000 & 1506	\\
+ 	20000 & -9330 	\\
+ 	20000 & 12619 	\\
+ 	1000 & 0	\\
+ 	1000 & 0 \\
+ 	1000 & 0 \\
+ 	500 & 0 \\
+ 	500 & 0 
+ \end{tabular}
+ 
+\end{center}
+\hfill \break
+Los resultados obtenidos son parecidos a la implementación del ejercicio 1. Para iteraciones menores obtenemos 0, que es el resultado teórico, y para iteraciones mayores, obtenemos resultados totalmente distintos al esperado.
+\end{document}
