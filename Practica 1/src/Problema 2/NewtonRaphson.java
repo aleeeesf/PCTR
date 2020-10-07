@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.lang.Math;
 
-public class Problema2 {
+public class NewtonRaphson {
 
 	private double derivada_f (double x)
 	{
@@ -61,7 +61,7 @@ public class Problema2 {
 	public static void main(String[] args)
 	{
 		Scanner S = new Scanner(System.in);
-		Problema2 p = new Problema2();
+		NewtonRaphson p = new NewtonRaphson();
 		int opc, iteration;
 		double x;
 		

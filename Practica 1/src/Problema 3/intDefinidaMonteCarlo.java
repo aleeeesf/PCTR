@@ -1,7 +1,7 @@
 import java.lang.Math;
 import java.util.Scanner;
 
-public class Problema3 {
+public class intDefinidaMonteCarlo {
 
 	public double IntegracionMonteCarlo(int n)
 	{
@@ -46,7 +46,7 @@ public class Problema3 {
 	public static void main(String[] args)
 	{
 		Scanner S = new Scanner(System.in);
-		Problema3 prueba = new Problema3();
+		intDefinidaMonteCarlo prueba = new intDefinidaMonteCarlo();
 		int n;
 		
 		System.out.println("(Funcion f(x) = x) Introduce n:" );
