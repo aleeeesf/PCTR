@@ -30,24 +30,25 @@ public class Complejos {
 	public Complejos suma(Complejos c_)
 	{
 		Complejos resultado = new Complejos();
-		resultado.real_imaginario[0] = this.real_imaginario[0] + c_.parteReal();
-		resultado.real_imaginario[1] = this.real_imaginario[1] + c_.parteImaginaria();
+		resultado.real_imaginario[0] = this.parteReal() + c_.parteReal();
+		resultado.real_imaginario[1] = this.parteImaginaria() + c_.parteImaginaria();
 		return resultado;
 	}
 	
 	public Complejos resta(Complejos c_)
 	{
 		Complejos resultado = new Complejos();
-		resultado.real_imaginario[0] = this.real_imaginario[0] - c_.parteReal();
-		resultado.real_imaginario[1] = this.real_imaginario[1] - c_.parteImaginaria();
+		resultado.real_imaginario[0] = this.parteReal() - c_.parteReal();
+		resultado.real_imaginario[1] = this.parteImaginaria() - c_.parteImaginaria();
 		return resultado;
 	}
 	
 	public Complejos Producto(Complejos c_)
 	{
 		Complejos resultado = new Complejos();
-		resultado.real_imaginario[0] = this.real_imaginario[0] * c_.parteReal();
-		resultado.real_imaginario[1] = this.real_imaginario[1] * c_.parteImaginaria();
+		double a = (this.parteReal() * c.parteReal()) - (this.parteImaginaria()*c.parteImaginaria);
+		double b = (this.parteReal() * c.parteImaginaria()) + (this.parteImaginaria()*c.parteReal());
+		resueltado = a + b;
 		return resultado;
 	}
 	
