@@ -1,0 +1,65 @@
+\documentclass{article}
+\usepackage{siunitx} 
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath} 
+
+\setlength\parindent{0pt}
+
+\renewcommand{\labelenumi}{\alph{enumi}.}
+
+%\usepackage{times} 
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Práctica 3 \\ Programación Concurrente y de Tiempo Real \\Universidad de Cádiz} % Title
+
+\author{Alejandro Serrano Fernández} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Ejercicio 2}
+Para este ejercicio escribiremos un programa secuencial y otro paralelo para efectuar el producto de dos matrices. En la siguiente tabla observamos los siguientes resultados obtenidos:
+
+\hfill \break
+\begin{center}
+ \begin{tabular}{| c | c |}
+ 	Hilos & Tiempo Empleado (En milisegundos)\\
+ 	1 & 8.0 \\
+ 	1 & 10.0 \\
+ 	1 & 7.0 \\
+ 	2 & 16.0 \\
+ 	2 & 14.0 \\
+ 	2 & 12.0 \\
+ 	4 & 170 \\
+ 	4 & 19.0 \\
+ 	4 & 20.0 \\
+ 	6 & 18.0 \\
+ 	6 & 19.0 \\
+ 	6 & 20.0 \\
+ 	8 & 20.0 \\
+ 	8 & 22.0 \\
+ 	8 & 20.0 \\
+ 	10 & 18.0 \\
+ 	10 & 19.0 \\
+ 	10 & 20.0 \\
+ \end{tabular}
+\end{center}
+\hfill \break
+Como podemos observar, para mayores números de hilos, el tiempo de ejecución aumenta.
+\end{document}
+
+
+
+

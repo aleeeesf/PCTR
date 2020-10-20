@@ -8,12 +8,12 @@ public class algEisenbergMcGuire implements Runnable{
 	//esperando: el proceso desea entrar en la sección crítica
 	//ejecutando: se encuentra dentro de la sección crítica
 	public static enum estados {ocioso, esperando, ejecutando}
-	private static volatile estados flags[] = new estados[4];
+	private static volatile estados flags[] = new estados[3];
 	public static volatile int n = 0;
 	private static volatile int indice = 0;
 	private int j;
 	private int id;	
-	public static int N = 4;
+	public static int N = 2;
 	
 
 	public algEisenbergMcGuire(int id)
@@ -75,14 +75,11 @@ public class algEisenbergMcGuire implements Runnable{
 	{
 		Runnable r1 = new algEisenbergMcGuire(0);
 		Runnable r2 = new algEisenbergMcGuire(1);
-		Runnable r3 = new algEisenbergMcGuire(2);
-		Runnable r4 = new algEisenbergMcGuire(3);
-		ExecutorService ex= Executors.newFixedThreadPool(4);
+		ExecutorService ex= Executors.newFixedThreadPool(2);
 		
 		ex.execute(r1);
 		ex.execute(r2);
-		ex.execute(r3);
-		ex.execute(r4);
+
 		ex.shutdown();
 		while(!ex.isTerminated());
 

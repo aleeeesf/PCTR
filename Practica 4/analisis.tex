@@ -111,18 +111,60 @@ Este algoritmo, aunque nos devuelva el resultado esperado, no cumple con las pro
 Para este ejercicio, he implementado el algoritmo de Dekker de tal manera que a través de dos procesos vamos modificando la variable n.
 Un proceso se dedica a incrementarla y otro se dedica a decrementarla, de tal manera que el resultado teórico final es 0.
 En la ejecución del programa, tras varias ejecuciones, verificamos que la cumple.
+Con este algoritmo aseguramos que se cumple la exclusión mutua, pues si un proceso se encuentra en la sección crítica, otros procesos no han podido pasar de bucle while más externos.
+
+También aseguramos la condición de progreso en la ejecución, ya que si por ejemplo p1 quiere entrar y p0 no, C0 = false y por lo tanto p1 puede entrar.
+
+Y finalmente, satisface también las limitación en la espera, puesto que cuando un proceso sale de la sección crítica indica que no quiere entrar y le cede el turno a otro.
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
 
 \section{Algoritmo de Eisenberg-McGuire}
+Para la ejecución de este algoritmo utilizaré la misma sección crítica que en el apartado anterior. En mi caso, con este algoritmo, tras varias ejecuciones, se cumple siempre el mismo resultado.
+\hfill \break
+El algoritmo utiliza las siguientes estructuras de datos:
+\hfill \break
+\hfill \break
+·Indicador: int[0...n-1], cuyos elementos son del tipo enumerado, cons tres posibles valores:
 
+-Ocioso: No desea entrar en la sección crítica.
+
+-Esperando: Desea entrar en la sección crítica.
+
+-Ejecutando: se encuentra ejecutando la sección crítica.
+
+·Indice: indica que proceso puede entrar en la sección crítica.
+
+\hfill \break
+Primero se comprueba que entra el proceso que tenga permiso y los demás estén esperando. Si alguno no está esperando, vuelve a comprobar desde el principio. Si hay algún proceso en la sección crítica, espera. Esto se repite hasta que ningún proceso esté ne la sección crítica e id tenga el turno o el que lo tenga, esté en estado ocioso. Posteriormente se da turno al primer proceso que quiera entrar, si ninguno quiere, se queda con el turno.
+
+%----------------------------------------------------------------------------------------
+%	SECTION 5
+%----------------------------------------------------------------------------------------
 
 \section{Algoritmo de Lamport}
 Este algoritmo es conocido como el algoritmo de la panadería. 
 Podemos observar que para este algoritmo se cumple/verifica la exclusión mutua cuando un proceso está en su sección crítica, evitando así que otros pasen a su sección crítica e interfiera en la solución final.
-Cabe destacar que se garantiza que los procesos se ejecutan de forma lineal(P0,P1...).
+Cabe destacar que se garantiza que los procesos se ejecutan de forma lineal (P0,P1...).
+
 En mi caso, para comprobar que se cumple la condición de exclusión mutua, he utilizado la misma condición que los ejercicios anteriores (incrementos de 10000 y decrementos de 10000), y el resultado obtenido tras varias ejecuciones, sigue siendo el mismo, es decir, 0.
+\hfill \break
+\hfill \break
+En cuanto a su funcionamiento, cada proceso recibe un número. El proceso con el número más bajo es el primero en ser ejecutado.
+
+Con el algoritmo de Lamport se verifica la exclusión mutua, se garantiza el progreso en la ejecución y asegura la limitación en la espera.
+
+%----------------------------------------------------------------------------------------
+%	SECTION 6
+%----------------------------------------------------------------------------------------
 
 \section{Algoritmo de Hyman}
 Cuando ejecutamos ambos procesos, podemos observar que ambos entran simultáneamente en la sección crítica, de tal manera que acaba bloqueando el programa, pues ninguno puede avanzar en su ejecución.
+
+Es decir, turno = 0, el proceso 1 modifica C1 a true, y encuentra que C0 = true y se para. Luego, P0 hace C0 = true, encuentra que turno = 0 y entra en la sección crítica. Luego P0 hace turno = 1 y entra también en la sección crítica, dando lugar a una solución incorrecta.
+
 
 Este algoritmo se presentó como una solución a la exclusión mutua, un desafío para los investigadores desde los años 60, aunque solo se presentó con intereses educacionales, ya que ayuda a clarificar las cualidades de una solución correcta.
 \end{document}
