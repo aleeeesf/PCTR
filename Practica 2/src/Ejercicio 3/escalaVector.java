@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class escalaVector {
 
-	private final static int n = 1000000;
+	private final static int n = 3000000;
 	private static int [] vector = new int[n];
 	
 	public void escalar(int escala)
