@@ -48,18 +48,18 @@ public class numPerfectos implements Callable<Integer>{
 	public static void main(String args[]) throws InterruptedException, ExecutionException
 	{
 		Runtime r = Runtime.getRuntime();
-		int nThreads = r.availableProcessors();
+		int nThreads = 2;
 		int rango = Integer.parseInt(args[0]);			
 		
 		ThreadPoolExecutor ex = new ThreadPoolExecutor(nThreads,nThreads,0L,TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 		ArrayList<Future<Integer>>  v= new ArrayList<Future<Integer>>();
 		int ini = 1, fin = rango/nThreads;		
 		
+		double tiempoInicio = System.nanoTime();
+		double tiempoFinal = 0.0;
 		
 		for(int i = 0; i < nThreads; i++)
 		{
-			System.out.println("inicio:"+ini);
-			System.out.println("fin:"+fin);
 			numPerfectos n = new numPerfectos(ini, fin);
 			v.add(ex.submit(n));
 			ini = fin + 1;
@@ -78,6 +78,9 @@ public class numPerfectos implements Callable<Integer>{
 		ex.shutdown();
 		
 		while(!ex.isTerminated());
-		System.out.println("Hay"+nPerfectos+"Numeros perfectos");		
+		System.out.println("Hay"+nPerfectos+"Numeros perfectos");	
+		System.out.println("Hilos usados: "+nThreads);
+		tiempoFinal = (System.nanoTime() - tiempoInicio)/1000000000;
+		System.out.println("El tiempo total ha sido de: "+tiempoFinal);
 	}
 }

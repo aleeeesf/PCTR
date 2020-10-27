@@ -1,13 +1,16 @@
 import java.util.Random;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 	
 public class prodMatricesParalelo implements Runnable{
 	
 	
 	public static int nMax = 1000;
-	public static int nThreads = Runtime.getRuntime().availableProcessors();
+	public static int nThreads = 64;
 	private static int[][] A = new int[nMax][nMax];
-	private static int[] B = new int[nMax];
-	private static int[] y = new int[nMax];
+	private static int[][] B = new int[nMax][nMax];
+	private static int[][] y = new int[nMax][nMax];
 	private int inicio, fin;
 	
 	public prodMatricesParalelo(int inicio, int fin)
@@ -22,7 +25,8 @@ public class prodMatricesParalelo implements Runnable{
 		{
 			for(int j = 0; j < nMax; j++)
 			{
-				y[i] += A[i][j] * B[j]; 
+				for(int k = 0; k < nMax; k++)
+				y[i][j] += A[i][k] * B[k][j]; 
 			}
 		}
 	}
@@ -31,45 +35,41 @@ public class prodMatricesParalelo implements Runnable{
 	{
 		Random r = new Random(System.nanoTime());
 		int inicio_ = 0, fin_ = nMax/nThreads;
-		Thread[] Hilos = new Thread[nThreads];
+		float cb = 0;	//Para tareas de computación numérica, cb = 0	
+		int tamPool = (int)(nThreads/(1-cb));
+		ThreadPoolExecutor ex = new ThreadPoolExecutor(tamPool,tamPool,0L,TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+
 		
-		for(int i = 0; i < nMax; i++)
-		{
-			B[i] = r.nextInt(10);
-			
+		for(int i = 0; i < nMax; i++)		{
+						
 			for(int j = 0; j < nMax; j++)
 			{
 				A[i][j] = r.nextInt(10);
+				B[i][j] = r.nextInt(10);
 			}
 		}
 		
 		long inicioTiempo = System.nanoTime();
 		
-		for(int i = 0; i < Hilos.length; i++)
+		for(int i = 0; i < nThreads; i++)
 		{
-			//System.out.println(fin);
-			Hilos[i] = new Thread(new prodMatricesParalelo(inicio_, fin_));
+			prodMatricesParalelo n = new prodMatricesParalelo(inicio_, fin_);
+			ex.submit(n);
 			inicio_ = fin_;
 			
-			if(i == Hilos.length-2)
+			if(i == nThreads-2)
 				fin_ = nMax;
 			else 
 				fin_ += nMax/nThreads;
-			
-			Hilos[i].start();
 		}
 		
-		try
-		{
-			for(int i = 0; i < Hilos.length; i++)
-			{
-				Hilos[i].join();
-			}
-		}catch(Exception ex) {}			
+		ex.shutdown();		
+		while(!ex.isTerminated());			
 
 		
 		double tiempoFinal = (double)((System.nanoTime()-inicioTiempo)/1000000);
 		
-		System.out.println("El tiempo empleado es: "+tiempoFinal+" milisegundos");		
+		System.out.println("El tiempo empleado es: "+tiempoFinal+" milisegundos");	
+		System.out.println("Tamaño del pool: "+tamPool);
 	}
 }

@@ -24,7 +24,6 @@ public class resImagenPar implements Runnable{
 		{
 			for(int j = 0; j < tam; j++)
 			{
-				
 				if(i+1 == tam)
 					x1 = 0;
 				else
@@ -61,14 +60,12 @@ public class resImagenPar implements Runnable{
 				x[i][j] = r.nextInt(255);
 			}
 		}
-		
-		
-		Runtime r1 = Runtime.getRuntime();
-		int nThreads = r1.availableProcessors();
-		int rango = 30;			
+
+		int nThreads = 8;
+		int nElementos = 1000;			
 		
 		ThreadPoolExecutor ex = new ThreadPoolExecutor(nThreads,nThreads,0L,TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
-		int ini = 0, fin = rango/nThreads;
+		int ini = 0, fin = nElementos/nThreads;
 		
 		double tiempoInicio = System.nanoTime();
 		double tiempoFinal = 0.0;
@@ -78,15 +75,16 @@ public class resImagenPar implements Runnable{
 			resImagenPar n = new resImagenPar(ini, fin);
 			ex.submit(n);
 			ini = fin;
-			fin += rango/nThreads;
-
-		}			
+			if(i == nThreads-2)
+				fin = nElementos;
+			else
+				fin += nElementos/nThreads;
+		}		
 
 		ex.shutdown();		
 		while(!ex.isTerminated());		
-	
 
-		tiempoFinal = (System.nanoTime() - tiempoInicio)/1000000;
+		tiempoFinal = (System.nanoTime() - tiempoInicio)/1000000000;
 		System.out.println("El tiempo total ha sido de: "+tiempoFinal);
 	}
 }

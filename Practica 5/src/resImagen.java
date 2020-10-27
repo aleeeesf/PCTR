@@ -55,7 +55,7 @@ public class resImagen {
 		double tiempoInicio = System.nanoTime();
 		double tiempoFinal = 0.0;
 		resaltado();
-		tiempoFinal = (System.nanoTime() - tiempoInicio)/1000000;
+		tiempoFinal = (System.nanoTime() - tiempoInicio)/1000000000;
 		System.out.println("El tiempo total ha sido de: "+tiempoFinal);
 	}
 }
