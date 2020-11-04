@@ -1,7 +1,13 @@
 import java.net.*;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.io.*;
+import java.util.Random;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
-public class ServidorHiloconPool {
+public class ServidorHiloconPool
+  implements Runnable
+{
     Socket enchufe;
     public ServidorHiloconPool(Socket s)
     {enchufe = s;}
@@ -15,12 +21,13 @@ public class ServidorHiloconPool {
 	        String datos = entrada.readLine();
 	        int j;
 	        int i = Integer.valueOf(datos).intValue();
-	        for(j=1; j<=20; j++){
-		        System.out.println("El hilo "+this.getName()+" escribiendo el dato "+i);
-		        sleep(1000);
-		    }
+	        for(j=1; j<=20; j++)
+	        {
+		        System.out.println("El hilo "+Thread.currentThread().getName()+" escribiendo el dato "+i);
+		        Thread.sleep(1000);
+	        }
 	        enchufe.close();
-	        System.out.println("El hilo "+this.getName()+"cierra su conexion...");
+	        System.out.println("El hilo "+Thread.currentThread().getName()+"cierra su conexion...");
 	        
 	    } catch(Exception e) {System.out.println("Error...");}
     }//run
@@ -28,6 +35,8 @@ public class ServidorHiloconPool {
 public static void main (String[] args)
 {
     int i;
+    int nThreads = 10;
+    ThreadPoolExecutor ex = new ThreadPoolExecutor(nThreads,nThreads,0L,TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
     int puerto = 2001;
         try{
             ServerSocket chuff = new ServerSocket (puerto, 3000);
@@ -36,10 +45,11 @@ public static void main (String[] args)
                 System.out.println("Esperando solicitud de conexion...");
                 Socket cable = chuff.accept();
                 System.out.println("Recibida solicitud de conexion...");
-                new ServidorHiloconPool(cable);
+                ex.execute(new ServidorHiloconPool(cable));
         }//while
-      } catch (Exception e)
-        {System.out.println("Error en sockets...");}
+      } catch (Exception e){System.out.println("Error en sockets...");}
+        
+    ex.shutdown();
 }//main
 
 }//Servidor_Hilos
