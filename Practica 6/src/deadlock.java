@@ -13,8 +13,13 @@ public class deadlock {
 			{
 				synchronized(objA)
 				{
+					try {
+						Thread.currentThread().sleep(100);
+					}catch(Exception e) {}
 					synchronized(objB)
 					{
+
+						System.out.println("I entered");
 						for(int i = 0; i < 20000; i++)
 							n++;
 					}
@@ -27,8 +32,12 @@ public class deadlock {
 			{
 				synchronized(objB)
 				{
+					try {
+						Thread.currentThread().sleep(100);
+					}catch(Exception e) {}
 					synchronized(objA)
 					{
+						System.out.println("I entered too");
 						for(int i = 0; i < 20000; i++)
 						n++;
 					}
