@@ -1,2 +1,4 @@
 ejercicio1 P6
 ejercicio 1 P7
+arreglar p9 fork
+terminar tabla p10
