@@ -10,5 +10,5 @@ public interface iPiMonteCarlo
 {
   public void reset() throws RemoteException;
   public void masPuntos(int nPuntos)  throws RemoteException;
-  public int Pi() throws RemoteException;
+  public double Pi() throws RemoteException;
 }

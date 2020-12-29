@@ -19,11 +19,12 @@ implements iPiMonteCarlo {
         this.puntos += nPuntos;
     }
 
-    public int Pi() throws RemoteException
+    public double Pi() throws RemoteException
     {
         Random r = new Random();
         int exitos = 0;
-        double x, y, z;
+        double x, y, z, res;
+
 
         for (int i = 0; i < puntos; i++)
         {
@@ -34,12 +35,15 @@ implements iPiMonteCarlo {
             if(z <= 1)
                 exitos++;
         }
-        return ((exitos/ puntos)*4);
+
+        res = (double)((double)(exitos*4)/puntos);
+        System.out.println(res);
+        return res;
     }
 
     public static void main(String[] args) throws Exception
     {
-        iBonoLoto servidor = new sBonoloto();
+        iPiMonteCarlo servidor = new SPiMonteCarlos();
         Naming.bind("servidore", servidor);
         System.out.println("Servidor Listo");
     }
