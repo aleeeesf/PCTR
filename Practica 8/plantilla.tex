@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{siunitx} 
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath} 
+\usepackage{listings}
+\setlength\parindent{0pt}
+
+\renewcommand{\labelenumi}{\alph{enumi}.}
+
+%\usepackage{times} 
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Práctica 3 \\ Programación Concurrente y de Tiempo Real \\Universidad de Cádiz} % Title
+
+\author{Alejandro Serrano Fernández} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+\begin{lstlisting}
+monitor impresoras
+	var
+	i,impresoras: Integer = 3
+	libre: Array of Boolean (Inicializados a true)
+	imp:condition
+
+procedure integer take_print:
+	begin
+		if impresoras == 0 then wait(imp)
+		n:= 0
+		while not(libre[n]) and n < 3 do
+			n:= n+1
+		libre[n]:= false;
+		impresoras:impresoras-1;
+	end
+
+procedure droop_print(var n: integer)
+	begin
+		libre[n]:= true;
+		impresoras:= impresoras+1;
+		signal(imp);
+	end
+
+task impresoras is
+	i: integer;
+	begin
+		while true:
+			begin
+				i:= take_print();
+				drop_print(i);
+			end;
+	  end
+
+\end{lstlisting}
+\end{document}
+
+
+
+

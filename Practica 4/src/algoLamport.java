@@ -43,7 +43,7 @@ public class algoLamport implements Runnable{
 			/*
 			 * 		SECCIÓN CRÍTICA
 			 */			
-			System.out.println(id);
+			
 			switch(id%2)
 			{
 				case 0:

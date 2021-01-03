@@ -3,13 +3,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.*;
 import java.util.*;
 
-public class tareaRunnable implements Runnable{
+public class primosRunnable implements Runnable{
    
   private final long linf;
   private final long lsup;
   public static AtomicInteger total = new AtomicInteger(0);
    	
-  public tareaRunnable(long linf, long lsup){
+  public primosRunnable (long linf, long lsup){
     this.linf = linf;
     this.lsup = lsup;
   }
@@ -30,8 +30,8 @@ public class tareaRunnable implements Runnable{
   {
 
     long nPuntos     = Integer.parseInt(args[0]);
-    int  nTareas     = Runtime.getRuntime().availableProcessors();
-    System.out.println(nTareas);
+    int  nTareas     = 16;
+    System.out.println("Nº threads: "+nTareas);
     long tVentana    = nPuntos/nTareas;
     long primosTotal = 0;
     long linf        = 0;
@@ -39,10 +39,10 @@ public class tareaRunnable implements Runnable{
 
     ThreadPoolExecutor ept = new ThreadPoolExecutor(nTareas,nTareas,0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
 
-    long inicTiempo = System.nanoTime();  
+    double inicTiempo = System.nanoTime();  
 
     for(int i=0; i<nTareas; i++){
-        ept.submit(new tareaRunnable(linf, lsup));
+        ept.submit(new primosRunnable (linf, lsup));
         linf=lsup+1;
         lsup+=tVentana;
       }  
@@ -50,7 +50,7 @@ public class tareaRunnable implements Runnable{
       ept.shutdown();
 
       while(!ept.isTerminated());
-      long tiempoTotal = (System.nanoTime()-inicTiempo)/(long)1.0e9;   
+      double tiempoTotal = (double)((System.nanoTime()-inicTiempo)/1000000000);   
       System.out.println("Primos hallados: "+total.get());
       System.out.println("Calculo finalizado en "+tiempoTotal+" segundos");
   }

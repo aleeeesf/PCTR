@@ -26,13 +26,10 @@ public class primosMPJ{
     int total = 0;
     int primos[] = new int[size];
 
-    long inicTiempo = System.nanoTime();  
+    double inicTiempo = System.nanoTime();  
 
     if(rank != size-1) //Proceso receptor
     {
-          System.out.println("linf id"+rank+" "+linf);
-          System.out.println("lsup id"+rank+" "+lsup);
-
           for(long i=(linf+1); i<=lsup;i++)
           {
               if(primosMPJ.esPrimo(i)) total++;
@@ -47,20 +44,14 @@ public class primosMPJ{
           for(int i = 0; i < size-1; i++)
             MPI.COMM_WORLD.Recv(primos, i, 1, MPI.INT, i, tag);
           
-            for(int i = 0; i < size; ++i)
-            {
-              System.out.println("primos["+i+"]"+primos[i]);
-            }   
-
           int nPrimos = 0;
           for(int i = 0; i < size; ++i)
           {
-            System.out.println(primos[i]);
             nPrimos += primos[i];
           }          
           System.out.println("Primos hallados: "+nPrimos);          
           
-          long tiempoTotal = (System.nanoTime()-inicTiempo)/(long)1.0e9; 
+          double tiempoTotal = (double)((System.nanoTime()-inicTiempo)/1000000000); 
           System.out.println("Calculo finalizado en "+tiempoTotal+" segundos");
     }
 

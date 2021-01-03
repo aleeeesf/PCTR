@@ -6,7 +6,7 @@ public class algHayman{
 	private static boolean c0 = false, c1 = false;
 	public volatile static int n = 0;
 	public static int turno = 1;
-	public static void main()
+	public static void main(String args[])
 	{
 		Runnable r1 = ()->{
 			c0 = true;
