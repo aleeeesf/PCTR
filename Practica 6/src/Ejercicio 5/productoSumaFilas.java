@@ -42,7 +42,7 @@ public class productoSumaFilas implements Callable<Integer>{
 						
 			for(int j = 0; j < nColumnas; j++)
 			{
-				M[i][j] = ran.nextInt(2);
+				M[i][j] = 1;
 			}
 		}
 		

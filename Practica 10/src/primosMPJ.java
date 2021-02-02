@@ -1,3 +1,6 @@
+//Alejandro Serrano Fernandez
+//20501318S
+
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.*;
 import java.text.ParsePosition;
@@ -24,35 +27,47 @@ public class primosMPJ{
     long linf        = (nPuntos/(size-1)) * rank;
     long lsup        = (nPuntos/(size-1)) * (rank+1);
     int total = 0;
-    int primos[] = new int[size];
+    int sumas[] = new int[size];
+    int M[][] = new int[4][4];
 
     double inicTiempo = System.nanoTime();  
 
-    if(rank != size-1) //Proceso receptor
+    if(rank == 0) //Proceso MASTER
     {
-          for(long i=(linf+1); i<=lsup;i++)
+          //Sumar columna
+          for(int i = 0; i < 4; i++)
           {
-              if(primosMPJ.esPrimo(i)) total++;
+             for(int j = 0; j < 4; j++)
+             {
+                M[i][j] = r.nextInt();
+             }
           }
-
-          primos[rank] = total;   
-          MPI.COMM_WORLD.Send(primos, rank, 1, MPI.INT, size-1, tag);
     }
 
-    else  //Proceso emisor
+    MPI.COMM_WORLD.Scatter(M,0,4,MPI.INT,recv,0,4,MPI.INT,0);
+
+    int recv[] = new int[4];
+    int suma = 0;
+
+    for(int i = 0; i < 4; i++)
     {
-          for(int i = 0; i < size-1; i++)
-            MPI.COMM_WORLD.Recv(primos, i, 1, MPI.INT, i, tag);
-          
-          int nPrimos = 0;
-          for(int i = 0; i < size; ++i)
+      suma += recv[i];
+    }
+
+    recv[4] = suma;
+
+    MPI.COMM_WORLD.Gather(M,0,4,MPI.INT,recv,0,4,MPI.INT,0);
+
+    if(rank == 0) //Proceso MASTER
+    {
+          int producto = 1;
+          //Sumar columna
+          for(int i = 0; i < 4; i++)
           {
-            nPrimos += primos[i];
-          }          
-          System.out.println("Primos hallados: "+nPrimos);          
-          
-          double tiempoTotal = (double)((System.nanoTime()-inicTiempo)/1000000000); 
-          System.out.println("Calculo finalizado en "+tiempoTotal+" segundos");
+                producto *= M[i][4];             
+          }
+
+          System.out.println("El producto es: "+producto);
     }
 
     MPI.Finalize();   
