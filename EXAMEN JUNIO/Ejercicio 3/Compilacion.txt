@@ -1,0 +1,8 @@
+Primero servidor:
+	javac .\servidor.java
+	rmic servidor
+	start rmiregistry
+	java servidor
+Segundo cliente:
+	javac .\cliente.java
+	java cliente
